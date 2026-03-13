@@ -18909,7 +18909,9 @@ main(int argc, char *argv[])
 			bar_setup(r);
 
 #ifdef __OpenBSD__
-	if (pledge("stdio proc exec", NULL) == -1)
+	if (unveil("/dev/null", "rw") == -1)
+		err(1, "unveil /dev/null");
+	if (pledge("stdio proc exec rpath wpath", NULL) == -1)
 		err(1, "pledge");
 #endif
 
